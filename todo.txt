@@ -1,0 +1,25 @@
+
+
+- Mandatory:
+	- Upgrade to root privileges
+	- Check if openvpn is installed
+	- Scan config dir:
+		- Defaulting to /etc/ovpn-gui/cfg, configuarable
+		- Scan for *.conf, *.ovpn
+	- Tray Icon:
+		- Showing possible connections (Config Names)
+		- Connect from trayicon
+	- Mainwindow:
+		- Show/Hide to/from trayicon
+		- Show Connection output, status, ...
+	- Understand OpenVPN current connection status
+	- Support multiple connections
+	
+- Not:
+	- No extra VPN functionality, just execute the config file. It should contain all necessary information.
+
+
+
+
+- Optional:
+	- Normal User mode, with a root demon listening to make the connection
