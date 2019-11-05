@@ -6,11 +6,13 @@ class Available_Connection
 {
 private:
     std::string _full_path;
-    std::string _dispslay_name;
+    std::string _display_name;
 
 public:
     Available_Connection(std::string path);
+    Available_Connection(const Available_Connection &con);
     ~Available_Connection();
+
+    std::string get_display_name() const;
+    std::string get_full_path() const;
 };
-
-

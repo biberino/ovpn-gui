@@ -23,3 +23,9 @@
 
 - Optional:
 	- Normal User mode, with a root demon listening to make the connection
+
+
+- Deps:
+pstreams
+thread
+gtk
