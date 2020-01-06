@@ -21,8 +21,10 @@ Log_Panel::~Log_Panel()
 
 void Log_Panel::append_message(std::string msg)
 {
+    std::lock_guard<std::mutex> lock(_mutex);
+
     _ref_text_buffer->place_cursor(_ref_text_buffer->end());
-    _ref_text_buffer->insert_at_cursor(msg);
+    _ref_text_buffer->insert_at_cursor(msg + "\n");
 
     /**scroll down **/
     Glib::RefPtr<Gtk::Adjustment> adj = get_vadjustment();

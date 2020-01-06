@@ -2,15 +2,21 @@
 
 Action_Panel::Action_Panel(/* args */)
 {
+    set_size_request(400, 400);
     _grid.attach(_lbl_connection_name, 0, 0, 1, 1);
     _grid.attach(_btn_connect, 0, 1, 1, 1);
+    _grid.attach(_btn_end, 0, 2, 1, 1);
     _btn_connect.set_label("Connect");
+    _btn_end.set_label("End Connection");
     add(_grid);
     show_all_children();
 
     _btn_connect.signal_clicked()
         .connect(sigc::mem_fun(*this,
                                &Action_Panel::on_button_connect_click));
+    _btn_end.signal_clicked()
+        .connect(sigc::mem_fun(*this,
+                               &Action_Panel::on_button_end_click));
 
     _dispatcher.connect(sigc::mem_fun(*this, &Action_Panel::on_dispatcher_emit));
 }
@@ -44,10 +50,21 @@ void Action_Panel::on_button_connect_click()
     c->start();
 }
 
+void Action_Panel::on_button_end_click()
+{
+    if (!_current_connection)
+        return;
+
+    if (_map_handlers.find(_current_connection->get_display_name()) == _map_handlers.end())
+        return;
+
+    _map_handlers[_current_connection->get_display_name()]->end();
+}
+
 void Action_Panel::on_dispatcher_emit()
 {
     std::lock_guard<std::mutex> lock(_mutex);
-    for( auto h: _vec_handlers_to_be_deleted)
+    for (auto h : _vec_handlers_to_be_deleted)
     {
         if (_map_handlers.find(h) == _map_handlers.end())
             continue;
@@ -64,4 +81,14 @@ void Action_Panel::delete_handler_object(std::string identifier)
     std::lock_guard<std::mutex> lock(_mutex);
     _vec_handlers_to_be_deleted.push_back(identifier);
     _dispatcher.emit();
+}
+
+void Action_Panel::set_log_panel(Log_Panel *lp)
+{
+    log_panel = lp;
+}
+
+void Action_Panel::forward_log_message(std::string msg)
+{
+    log_panel->append_message(msg);
 }

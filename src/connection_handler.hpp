@@ -6,6 +6,7 @@
 
 #include "available_connection.hpp"
 
+
 class Action_Panel;
 
 class Connection_Handler
@@ -29,6 +30,7 @@ public:
 
 private:
     std::thread *_thread = nullptr;
+    redi::ipstream *stream = nullptr;
 
     void run();
 
@@ -41,4 +43,7 @@ public:
     /**
      * Starts a Thread handling the OVPN connection */
     void start();
+    /**
+     * Kills the OVPN connection if it was started */
+    void end();
 };

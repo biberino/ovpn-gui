@@ -15,9 +15,12 @@ Main_Window::Main_Window()
     _connection_panel.set_connections(scan_config_dir("/home/biber/robin/sandbox/test/"));
     _connection_panel.set_action_panel(&_action_panel);
 
+    _action_panel.set_log_panel(&_log_panel);
+
     add(_grid);
 
     show_all_children();
+
 }
 
 Main_Window::~Main_Window()
